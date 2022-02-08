@@ -1,9 +1,9 @@
-import Form from "../../components/Form"
+import Crud from "../../components/Crud"
 function Home() {
 
     return (
         <div>
-            <Form/>
+            <Crud/>
         </div>
       )
 }

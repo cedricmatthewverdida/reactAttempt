@@ -1,44 +1,53 @@
 
-
-import React, { useState,useEffect } from 'react';
+import React, { useContext,useEffect, useState  } from 'react';
+import {CrudContext} from "../Crud"
 function Form() {
 
-    const [name,setName] = useState("")
-    const [role,setRole] = useState("")
-    const [proceed,setProceed] = useState(false)
+    const {name,list,setName,setList,action,setAction,currentKey,setKey} = useContext(CrudContext);
 
+    const [proceed,setProceed] = useState(false);
+
+    
     useEffect(() => {
-        return name != "" && role != "" ? setProceed(true) : setProceed(false);
-    },[name, role]);
+        return name.trim() !== "" ? setProceed(true) : setProceed(false)
+    },[name,list]);
+
+
+    function Action (){
+        
+        if(action === "Create"){
+            setList(list => [...list, name])
+        }
+        
+        if(action === "Update"){
+            let newData = [...list];
+            newData[currentKey]= name
+            setList(newData);
+            setAction("Create")
+            setKey(undefined);
+        }
+
+
+    }
+    
 
 
     return (
         <div>
 
-<h1 className="text-3xl font-bold underline text-tahiti">
-      Hello world!
-    </h1>
-
-
-
             <input
                 value={name}
                 onChange={(e) => {setName(e.target.value)}}
                 type="name"
-            />
-
-            <input
-                value={role}
-                onChange={(e) => {setRole(e.target.value)}}
-                type="name"
+                placeholder="Name"
             />
 
 
             <button
-            className="bg-midnight"
+            onClick={() => Action()}
             disabled={!proceed ? true : false}
             >
-                Test Button
+                {action}
             </button>
 
         </div>
